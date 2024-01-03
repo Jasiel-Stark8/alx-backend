@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Helper function"""
 
+
 def index_range(page, page_size):
     """
         Calculate the start and end index for the items on a specific page.
