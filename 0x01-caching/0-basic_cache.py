@@ -8,6 +8,7 @@ class BasicCache(BaseCaching):
     BasicCache class that inherits from BaseCaching.
     This caching system doesn't have a limit.
     """
+
     def put(self, key, item):
         """
         Assign the item value for the key key in self.cache_data.
