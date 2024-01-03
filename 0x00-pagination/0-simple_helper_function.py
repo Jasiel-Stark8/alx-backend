@@ -11,7 +11,8 @@ def index_range(page, page_size):
         page_size -- The number of items on each page.
 
         Returns:
-        A tuple containing the start and end index for the items on the specified page.
+        A tuple containing the start and end index for the
+        items on the specified page.
     """
 
     # Calculating start index
