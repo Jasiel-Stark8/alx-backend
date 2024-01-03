@@ -19,4 +19,4 @@ def index_range(page, page_size):
     # Calculating end index
     end_idx = page * page_size
 
-    return (end_idx, start_idx)
+    return (start_idx, end_idx)
