@@ -37,7 +37,8 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Cached dataset
+        """
+        Cached dataset
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -48,4 +49,15 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-            pass
+        """Find the correct indexes to paginate the dataset and return the appropriate page."""
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page_size > 0
+
+        start_index, end_index = index_range(page, page_size)
+        dataset = self.dataset()
+
+        # Return empty list if start index is out of range
+        if start_index > len(dataset):
+            return []
+
+        return dataset[start_index:end_index]
