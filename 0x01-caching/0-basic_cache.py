@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""_summary_"""
+"""BasicCache module"""
 from base_caching import BaseCaching
 
 
@@ -13,7 +13,7 @@ class BasicCache(BaseCaching):
         Assign the item value for the key key in self.cache_data.
         If key or item is None, this method should not do anything.
         """
-        if key is not None or key is not None:
+        if key is not None and key is not None:
             self.cache_data[key] = item
 
     def get(self, key):
