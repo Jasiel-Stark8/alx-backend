@@ -64,7 +64,6 @@ class Server:
 
         return dataset[start_index:end_index]
 
-
     def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
         """Return a dictionary with pagination metadata."""
         total_items = len(self.dataset())
@@ -74,7 +73,7 @@ class Server:
 
         # Calculating next and previous page numbers
         next_page = page + 1 if page < total_pages else None
-        prev_page = page -1 if page > 1 else None
+        prev_page = page - 1 if page > 1 else None
 
         return {
             'page_size': len(results),
