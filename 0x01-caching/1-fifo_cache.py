@@ -1,36 +1,34 @@
 #!/usr/bin/python3
-""" FIFOCache module. """
-
+"""_summary_"""
+from typing import Union
 from base_caching import BaseCaching
 
 
 class FIFOCache(BaseCaching):
-    """ FIFOCache class that inherits from BaseCaching.
-    Implements the FIFO caching algorithm. """
-
+    """
+    Class
+    """
     def __init__(self):
-        """ Initialize the class. """
+        """Sumary_line"""
         super().__init__()
-        self.key_order = []  # List to keep track of the order keys were added
+        self.key_order = []
 
-    def put(self, key, item):
-        """ Assign the item value for the key in self.cache_data.
-        If the cache exceeds its limit, remove the first item added. """
+    def put(self, key: Union[str, int], item: Union[str, int]) -> None:
+        """sumary_line"""
         if key is not None and item is not None:
             if key not in self.cache_data:
-                self.key_order.append(key)  # Track key order
+                self.key_order.append(key)
 
-            self.cache_data[key] = item  # Add or update the key-value pair
+            self.cache_data[key] = item
 
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                # Remove the first item added (FIFO)
                 discarded_key = self.key_order.pop(0)
                 del self.cache_data[discarded_key]
                 print(f"DISCARD: {discarded_key}")
+            return None
 
     def get(self, key):
-        """ Return the value linked to the key from self.cache_data.
-        If key is None or doesn’t exist, return None. """
+        """sumary_line"""
         if key is not None and key in self.cache_data:
             return self.cache_data[key]
         return None
