@@ -4,17 +4,16 @@ from base_caching import BaseCaching
 
 
 class LIFOCache(BaseCaching):
-    """LIFOCache Class"""
+    """LIFOCache Class implements Last-In-First-Out caching strategy"""
     def __init__(self):
+        """Initialize Class"""
         super().__init__()
         self.key_order = []
 
     def put(self, key, item):
-        """_summary_
-
-        Args:
-            key (_type_): _description_
-            item (_type_): _description_
+        """
+        Assign the item value for the key in self.cache_data.
+        If the cache exceeds its limit, remove the last item added
         """
         if key is not None and item is not None:
             if key in self.cache_data:
@@ -27,10 +26,11 @@ class LIFOCache(BaseCaching):
             self.cache_data[key] = item
             self.key_order.append(key)
 
-        
-
     def get(self, key):
-        """sumary_line"""
+        """
+        Return the value linked to the key from self.cache_data.
+        If key is None or doesn’t exist, return None.
+        """
         if key is not None and key in self.cache_data:
             return self.cache_data[key]
         return None
