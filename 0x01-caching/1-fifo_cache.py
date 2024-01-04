@@ -1,20 +1,23 @@
 #!/usr/bin/python3
 """_summary_"""
-from typing import Union
 from base_caching import BaseCaching
 
 
 class FIFOCache(BaseCaching):
     """
-    Class
+    FIFOCache class that inherits from BaseCaching.
+    Implements the FIFO caching algorithm.
     """
     def __init__(self):
-        """Sumary_line"""
+        """Initialize Class"""
         super().__init__()
         self.key_order = []
 
-    def put(self, key: Union[str, int], item: Union[str, int]) -> None:
-        """sumary_line"""
+    def put(self, key, item):
+        """
+        Assign the item value for the key in self.cache_data.
+        If the cache exceeds its limit, remove the first item added.
+        """
         if key is not None and item is not None:
             if key not in self.cache_data:
                 self.key_order.append(key)
@@ -28,7 +31,10 @@ class FIFOCache(BaseCaching):
             return None
 
     def get(self, key):
-        """sumary_line"""
+        """
+        Return the value linked to the key from self.cache_data.
+        If key is None or doesn’t exist, return None.
+        """
         if key is not None and key in self.cache_data:
             return self.cache_data[key]
         return None
