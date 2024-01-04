@@ -13,7 +13,10 @@ class LRUCache(BaseCaching):
         self.key_order = []
 
     def put(self, key, item):
-        """sumary_line"""
+        """
+        Assign the item value for the key in self.cache_data.
+        If the cache exceeds its limit, remove the least recently used item
+        """
         if key is not None and item is not None:
             if key in self.cache_data:
                 self.key_order.remove(key)
@@ -27,7 +30,10 @@ class LRUCache(BaseCaching):
         self.key_order.append(key)
 
     def get(self, key):
-        """Get cache"""
+        """
+        Return the value linked to the key from self.cache_data.
+        Update the key as most recently used
+        """
         if key is not None and key in self.cache_data:
             self.key_order.remove(key)
             self.key_order.append(key)
