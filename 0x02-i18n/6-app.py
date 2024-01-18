@@ -42,19 +42,21 @@ app.config.from_object(Config)
 
 @babel.localeselector
 def get_locale():
-    """Determine the best match for the user's locale."""
-    # If a user is logged in, use the locale from the user settings
-    if g.user is not None:
-        return g.user.get('locale')
-
-    # If the 'locale' parameter is given in the URL, use it
-    url_locale = request.args.get('locale')
-    if url_locale:
-        return url_locale
-
-    # Otherwise, use the Accept-Language header in the request
-    return request.accept_languages.best_match(['fr', 'en'])
-
+    """Determine the best match with our supported languages"""
+    # Check URL parameters
+    locale = request.args.get('locale')
+    if locale and locale in app.config['LANGUAGES']:
+        return locale
+    # Check user settings
+    user = get_user()
+    if user and 'locale' in user and user['locale'] in app.config['LANGUAGES']:
+        return user['locale']
+    # Check request headers
+    locale = request.accept_languages.best_match(app.config['LANGUAGES'])
+    if locale:
+        return locale
+    # Default locale
+    return app.config['BABEL_DEFAULT_LOCALE']
 
 
 @app.route('/')
