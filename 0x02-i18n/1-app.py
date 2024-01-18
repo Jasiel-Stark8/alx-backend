@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Flask App"""
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, g, request
 from flask_babel import Babel
 
 app = Flask(__name__)
@@ -16,6 +16,9 @@ def get_locale():
 
 def get_timezone():
     """Get Timezone else default to UTC"""
+    user = getattr(g, 'user', None)
+    if user is not None:
+        return user.timezone
     return 'UTC'
 
 babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
