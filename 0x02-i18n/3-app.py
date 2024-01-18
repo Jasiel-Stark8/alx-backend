@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
 """Flask App"""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_babel import Babel
 
+
 app = Flask(__name__)
-app.config.from_pyfile('babel.cfg')
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 babel = Babel(app)
+
 
 @babel.localeselector
 def get_locale():
-    # Your locale selection logic (like in previous steps)
-    pass
+    """Get locale"""
+    return request.accept_languages.best_match(['en', 'fr'])
+
 
 @app.route('/')
 def home():
+    """Return home page"""
     return render_template('3-index.html')
 
 
