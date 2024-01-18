@@ -1,17 +1,25 @@
 #!/usr/bin/env python3
 """Flask App"""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_babel import Babel
 
 app = Flask(__name__)
 app.config['BABEL_DEFAULT_LOCALE'] = ["en", "fr"]
+app.config['BABEL_DEFAULT_TIMEZONE'] = ['UTC']
 babel = Babel(app)
 
 
+@babel.localeselector
 def get_locale():
-    return babel.
+    """Return default language as en"""
+    return request.accept_languages.best_match(['en', 'fr'])
 
+
+@babel.timezoneselector
+def get_timezone():
+    """Get Timezone else default to UTC"""
+    return request.timezone
 
 
 @app.route('/')
