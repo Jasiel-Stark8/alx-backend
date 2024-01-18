@@ -32,10 +32,10 @@ def get_locale():
 # before_request decorator
 @app.before_request
 def before_request():
-    """"""
+    """validate user login before anything"""
     user_id = login_as()
     g.user = get_user(users, int(user_id)) if user_id else None
-        
+
 
 @app.route('/')
 def home():
