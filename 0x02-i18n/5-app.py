@@ -1,18 +1,12 @@
 #!/usr/bin/env python3
-"""Flask App"""
-
-from flask import Flask, render_template, request, g
+""" Basic Flask app"""
+from flask import Flask, render_template, g, request
 from flask_babel import Babel
 
-class Config:
-    """Language and time configuration class"""
-    LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 app = Flask(__name__)
-app.config.from_object(Config)
 babel = Babel(app)
+
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -22,16 +16,28 @@ users = {
 }
 
 
-def get_user(user_id: int):
-    """Return a user dictionary or None"""
-    return users.get(user_id)
+def get_user():
+    """Get the current user from the users table"""
+    user_id = request.args.get('login_as')
+    if user_id and int(user_id) in users:
+        return users[int(user_id)]
+    return None
 
 
 @app.before_request
 def before_request():
-    """Set a user as a global variable"""
-    user_id = request.args.get('login_as', type=int)
-    g.user = get_user(user_id)
+    """Set the current user before each request"""
+    g.user = get_user()
+
+
+class Config:
+    """Language and time configuration class"""
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
+
+
+app.config.from_object(Config)
 
 
 @babel.localeselector
@@ -45,8 +51,8 @@ def get_locale():
 
 
 @app.route('/')
-def home():
-    """Return home page"""
+def index():
+    """Returns index.html"""
     return render_template('5-index.html')
 
 
