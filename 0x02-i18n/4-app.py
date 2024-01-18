@@ -23,7 +23,7 @@ def get_locale():
     # Get locale from URL parameter
     url_locale = request.args.get('locale')
     if url_locale and url_locale in Config.LANGUAGES:
-        return user.locale
+        return url_locale
 
     # Check User-specific locale preference
     user = getattr(g, 'user', None)
