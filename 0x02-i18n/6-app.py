@@ -42,12 +42,20 @@ app.config.from_object(Config)
 
 @babel.localeselector
 def get_locale():
-    """Get locale from user prefence adn settings"""
-    # if a user is logged in, use the locale from the user settings
-    user = getattr(g, 'user', None)
-    if user is not None:
-        return user.locale
-    return request.accept_languages.best_match(['de', 'fr', 'en'])
+    """Determine the best match for the user's locale."""
+    # If a user is logged in, use the locale from the user settings
+    if g.user is not None:
+        return g.user.get('locale')
+
+    # If the 'locale' parameter is given in the URL, use it
+    url_locale = request.args.get('locale')
+    if url_locale:
+        return url_locale
+
+    # Otherwise, use the Accept-Language header in the request
+    return request.accept_languages.best_match(['fr', 'en'])
+
+
 
 @app.route('/')
 def index():
