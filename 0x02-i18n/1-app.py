@@ -16,7 +16,7 @@ def get_locale():
 
 def get_timezone():
     """Get Timezone else default to UTC"""
-    return request.timezone
+    return 'UTC'
 
 babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
 
