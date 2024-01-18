@@ -4,9 +4,14 @@
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
+class Config:
+    """Language and time configuration class"""
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
+
 app = Flask(__name__)
-app.config['BABEL_DEFAULT_LOCALE'] = 'en'
-app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
+app.config.from_object(Config)
 babel = Babel(app)
 
 users = {
@@ -31,11 +36,12 @@ def before_request():
 
 @babel.localeselector
 def get_locale():
-    """Get locale from user preferences or request headers"""
-    user = getattr(g, 'user', None)
-    if user is not None:
-        return user.get('locale')
-    return request.accept_languages.best_match(['en', 'fr'])
+    """Determine the best match with our supported languages"""
+    locale = request.args.get('locale')
+    if locale and locale in app.config['LANGUAGES']:
+        return locale
+    else:
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route('/')
