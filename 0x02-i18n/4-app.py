@@ -20,7 +20,6 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale():
     """Get locale"""
-
     # Get locale from URL parameter
     url_locale = request.args.get('locale')
     if url_locale and url_locale in Config.LANGUAGES:
