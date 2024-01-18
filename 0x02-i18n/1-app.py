@@ -21,6 +21,7 @@ def get_timezone():
         return user.timezone
     return 'UTC'
 
+
 babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
 
 
