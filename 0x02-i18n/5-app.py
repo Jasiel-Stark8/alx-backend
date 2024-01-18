@@ -16,15 +16,18 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
+
 def get_user(user_id: int):
     """Return a user dictionary or None"""
     return users.get(user_id)
+
 
 @app.before_request
 def before_request():
     """Set a user as a global variable"""
     user_id = request.args.get('login_as', type=int)
     g.user = get_user(user_id)
+
 
 @babel.localeselector
 def get_locale():
@@ -34,7 +37,12 @@ def get_locale():
         return user.get('locale')
     return request.accept_languages.best_match(['en', 'fr'])
 
+
 @app.route('/')
 def home():
     """Return home page"""
     return render_template('5-index.html')
+
+
+if __name__ == '__main__':
+    app.run(host='localhost', port=5000, debug=True)
